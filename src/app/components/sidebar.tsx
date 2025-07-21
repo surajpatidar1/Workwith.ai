@@ -1,7 +1,7 @@
-'use client'
 
-import { useClerk, useUser } from "@clerk/clerk-react"
-import { Eraser, FileText, Hash, House, LucideIcon , ImageIcon, Scissors, SquarePen, User } from "lucide-react"
+
+import { useClerk, useUser,Protect } from "@clerk/clerk-react"
+import { Eraser, FileText, Hash, House, LucideIcon , ImageIcon, Scissors, SquarePen, User, LogOut } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -16,7 +16,7 @@ interface navItemsInterface {
 
 const navItems:navItemsInterface[] = [
       {
-        to: '/layout',
+        to: '/layout/dashboard',
         label: 'Dashboard',
         Icon: House
       },
@@ -93,7 +93,7 @@ function sidebar({sidebar, setSideBar}:sidebar) {
 
       <h1 className="mt-1 text-center">{user?.fullName}</h1>
         
-        <div className="mt-5">
+        <div className="px-6 mt-5 text-sm text-gray-600 font-medium">
           {
             navItems.map((item,inx)=>(
               <Link 
@@ -113,6 +113,42 @@ function sidebar({sidebar, setSideBar}:sidebar) {
           }
         </div>
      </div>
+
+     <div className="w-full border-t border-gray-200 p-4 px-7 flex items-center justify-between">
+
+      <div 
+          onClick={()=>openUserProfile()} 
+          className="flex gap-2 items-center cursor-pointer"
+      >
+
+        {
+          user &&
+         <Image 
+            src={user?.imageUrl} 
+            alt="uer-image" 
+            width={100} 
+            height={100} 
+            className="w-8 rounded-full"
+          />
+        }
+        <div>
+          <h1 className="text-sm font-medium">{user?.fullName}</h1>
+          <p className="text-xs text-gray-500">
+            <Protect plan='Prenium Plan' fallback='Free '>Preminum</Protect>
+            Plan
+          </p>
+        </div>
+        
+      </div>
+           <LogOut 
+       onClick={()=>signOut()} 
+       className="w-4.5 text-gray-400 hover:text-gray-700 transition cursor-pointer"
+     />
+     </div>
+
+     
+
+
     </div>
   )
 }
