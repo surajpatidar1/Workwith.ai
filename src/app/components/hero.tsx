@@ -27,7 +27,7 @@ function hero() {
       <div className="flex justify-center items-center gap-5">
         <Button
           variant={"outline"}
-          onClick={()=>route.push('/layout')} 
+          onClick={()=>route.push('/layout/dashboard')} 
           >
             Start creating now
         </Button>
