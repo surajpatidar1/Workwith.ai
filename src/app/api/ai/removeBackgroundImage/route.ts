@@ -20,7 +20,7 @@ export  async function POST(req:NextRequest ){
            
            connectCloudinary()
     try {
-        
+        console.log("TRY START");
         const {userId} = await auth()
 
         if(!userId){
@@ -30,9 +30,10 @@ export  async function POST(req:NextRequest ){
             },{status: 401});
         }
        const formData = await req.formData();
-
+       
   
       const image = formData.get('image') as File | null;
+      
         if (!image) {
     return NextResponse.json({ error: 'Please try again' }, { status: 400 });
   }
@@ -60,24 +61,27 @@ export  async function POST(req:NextRequest ){
 
  
 
-        const secure_url  =  cloudianry.uploader.upload_stream(
-                      {
-                           transformation: [
-                                           {
-                                            effect: "background_removal",
-                                            background_removal: "remove_the_background",
-                                             },
-                                              ],
-                                         },
-                 (error, result) => {
-                     if (error) return NextResponse.json({ error }, { status: 500 });
-                    return NextResponse.json({ url: result?.secure_url });
-                          }
-                      ).end(buffer);
+       const secure_url = await new Promise<string>((resolve, reject) => {
+  cloudianry.uploader.upload_stream(
+    {
+      transformation: [
+        {
+          effect: "background_removal",
+          background_removal: "remove_the_background",
+        },
+      ],
+    },
+    (error, result) => {
+      if (error || !result) return reject(error);
+      resolve(result.secure_url);
+    }
+  ).end(buffer);
+});
+
       
 
           await sql`INSERT INTO creations (user_Id,prompt,content,type)
-          VALUES (${userId},'Remove background from image',${secure_url},'image'`;
+          VALUES (${userId},'Remove background from image',${secure_url},'image')`;
 
           
 

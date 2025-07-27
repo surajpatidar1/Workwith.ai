@@ -35,7 +35,9 @@ function navbar() {
         
         {
           user? 
-          <UserButton/> :
+          <div className="scale-150 ">
+                  <UserButton />
+          </div> :
           (
               <SignedOut>
               <SignUpButton>

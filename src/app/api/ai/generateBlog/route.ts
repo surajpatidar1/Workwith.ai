@@ -76,7 +76,7 @@ export  async function POST(req:NextRequest ){
                     })
           }
 
-          return NextResponse.json({success:true,content})
+          return NextResponse.json({success:true,message:content})
 
 
     } catch (error:any) {

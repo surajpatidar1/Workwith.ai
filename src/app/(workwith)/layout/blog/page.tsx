@@ -1,7 +1,12 @@
  'use client'
+import { LoaderFive } from "@/components/ui/loader";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
 import { Edit , Sparkles } from 'lucide-react'
 import { useState } from "react";
+import toast from "react-hot-toast";
+import Markdown from "react-markdown";
 function page() {
 
 
@@ -34,16 +39,53 @@ function page() {
   ]
 
 
+      const [category,setCategory] = useState(Category[0])
+      const [input,setInput] = useState<string>('')
+      const [loading,setLoading] = useState<boolean>(false)
+      const [content,setContent] = useState<string>("")
+
+      const {getToken} = useAuth()
+
+      
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-       console.log(e.target.value)
+       setInput(e.target.value);
       
      };
-     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+     const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
        e.preventDefault();
-       console.log("submitted");
-     };
+       try {
+        
+        setLoading(true)
+      
 
-      const [category,setCategory] = useState(Category[0])
+
+        const prompt = `Generate a blog title for the keyword ${input} in the category ${category.title}`
+  
+        const {data} = await axios.post(
+                           '/api/ai/generateBlog',
+                           {prompt},
+                           {
+                            headers:{
+                                 Authorization:`Bearer ${await getToken()}`
+                                   }}
+                          );
+
+                          if(data.success){
+                                       console.log("Response:", data);
+
+                            setContent(data.message)
+                           
+                          }
+                          else{
+                            toast.error(data.message)
+                          }
+
+
+       } catch (error:any) {
+           toast.error(error.message)
+       }
+       setLoading(false)
+     };
 
   return (
     <div className='h-full overflow-y-scroll p-6 flex items-start flex-wrap gap-4 text-slate-700'>
@@ -80,10 +122,23 @@ function page() {
         }
       </div>
       <br />
-      <button className='bg-gradient-to-r from-yellow-200 to-purple-400 rounded-lg p-3 flex gap-5'>
-        <Edit className='w-5'/>
-        Generate title
-      </button>
+
+      {
+        loading ? 
+                 <span >
+                    <LoaderFive text="Generating Blog Title..." />
+                  </span>
+                  :
+                   (
+                          <button 
+                             className='bg-gradient-to-r from-yellow-200 to-purple-400 rounded-lg p-3 flex gap-5'
+                              onClick={(e) => onSubmit(e as any)}>
+                          <Edit className='w-5'/>
+                          Generate title
+                          </button>
+                   )
+      }
+      
   </div>
 
      <div className='w-full max-w-lg p-4 bg-white rounded-lg flex 
@@ -93,13 +148,32 @@ function page() {
           <span className='w-5 h-5 text-[#c78ce0] text-4xl font-semibold flex items-center '>#</span>
          <h1 className='text-xl font-bold'>Generated Titles</h1>
         </div>
+           
 
-        <div className='flex-1 flex justify-center items-center'>
-          <div className='text-sm flex-col items-center gap-5 text-gray-400 '>
-               <span className='w-5 h-5 text-5xl text-center mx-auto'> # </span>
-               <p>Enter keywords and click " Generate Titles " to get started</p>
-          </div>
-        </div>
+           {
+            !content ?
+              (
+                 <div className='flex-1 flex justify-center items-center'>
+                    <div className='text-sm flex-col items-center gap-5 text-gray-400 '>
+                     <span className='w-5 h-5 text-5xl text-center mx-auto'> # </span>
+                    <p>Enter keywords and click " Generate Titles " to get started</p>
+                    </div>
+                 </div>
+              ) :
+              (
+                <div 
+                    className='mt-3 h-full overflow-y-scroll text-sm text-slate-600'
+                >
+                      <div className='reset-tw'>
+                       <Markdown>
+                        {content}
+                        </Markdown>
+                                                 
+                       </div>
+                      </div>
+              )
+           }
+        
 
      </div>
 

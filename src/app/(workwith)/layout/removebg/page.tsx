@@ -1,15 +1,53 @@
 'use client'
 import { FileUpload } from '@/components/ui/file-upload';
+import { LoaderOne } from '@/components/ui/loader';
+import { useAuth } from '@clerk/clerk-react';
+import axios from 'axios';
 import { Eraser, Sparkles } from 'lucide-react'
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 function page() {
 
   const [files, setFiles] = useState<File[]>([]);
+  const [loading,setLoading] = useState<boolean>(false)
+  const [content,setContent] = useState<string>('')
   const handleFileUpload = (files: File[]) => {
     setFiles(files);
-    console.log(files);
   };
+
+ const {getToken} =  useAuth()
+
+  const onSubmitHandler = async ()=>{
+           console.log("clicked")
+          
+     try {
+      setLoading(true)
+      const token = await getToken();
+     const formData = new FormData();
+     formData.append('image',files[0])
+
+
+       const {data} = await axios.post('/api/ai/removeBackgroundImage',
+                        formData,
+                      {
+                         headers:{
+                          Authorization:`Bearer ${await getToken()}`
+                                 }});
+        
+       if(data.success){
+        setContent(data.content)
+        }
+        else{
+        toast.error(data.message)          
+     };
+
+     } catch (error:any) {
+        toast.error(error.message)
+     }
+     setLoading(false)
+  }
 
   return (
     <div>
@@ -31,10 +69,22 @@ function page() {
             <p className='mt-8 text-sm font-medium mt'>Support JPG,PNG and other formats</p>
 
           <br />
-          <button className='bg-gradient-to-r from-orange-200 to-red-400 rounded-lg p-3 flex gap-3'>
-            <Eraser className='w-5'/>
-            Remove Background
-          </button>
+
+          {
+            loading ?
+                   <span>
+                     <LoaderOne />
+                   </span> :
+                   (
+                      <button 
+                      className='bg-gradient-to-r from-orange-200 to-red-400 rounded-lg p-3 flex gap-3'
+                       onClick={onSubmitHandler}>
+                       <Eraser className='w-5'/>
+                        Remove Background
+                       </button>
+                   )
+          }
+          
       </div>
     
          <div className='w-full max-w-lg p-4 bg-white rounded-lg flex 
@@ -45,12 +95,28 @@ function page() {
              <h1 className='text-xl font-semibold'>Peocessed Image</h1>
             </div>
     
-            <div className='flex-1 flex justify-center items-center'>
-              <div className='text-sm flex-col items-center gap-5 text-gray-400'>
-                   <Eraser className='w-5 mx-auto'/>
-                   <p>Upload image and click" Remove Background " to get started</p>
-              </div>
-            </div>
+              {
+                !content ?
+                         (
+                          <div className='flex-1 flex justify-center items-center'>
+                           <div className='text-sm flex-col items-center gap-5 text-gray-400'>
+                            <Eraser className='w-5 mx-auto'/>
+                             <p>Upload image and click" Remove Background " to get started</p>
+                            </div>
+                          </div>
+                         ): (
+
+                          <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-5">
+                                           <Image
+                                          src={content}
+                                          alt="AI Generated Image"
+                                            fill
+                                          className="object-contain rounded-lg"
+                                         />
+                                         </div>
+                         )
+              }
+            
     
          </div>
     

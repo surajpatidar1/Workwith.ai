@@ -7,6 +7,7 @@ import Plan from "./components/plan";
 import Footer from "./components/footer";
 import { useAuth } from "@clerk/clerk-react";
 import { useEffect } from "react";
+import  { Toaster } from 'react-hot-toast';
 
 export default function Home() {
 
@@ -17,6 +18,12 @@ export default function Home() {
   },[])
   return (
     <>
+    <div>
+        < Toaster
+            position="top-center"
+            reverseOrder={false}
+        />
+    </div>
     <Navbar/>
     <Hero/>
     <AiTools/>
