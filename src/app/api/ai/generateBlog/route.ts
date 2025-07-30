@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import userData from "@/app/api/auth";
 import OpenAI from "openai";
 import sql from "@/app/api/dbConnect";
-import clerkClient from "@clerk/clerk-sdk-node";
+import { createClerkClient } from '@clerk/backend' 
 import { auth } from "@clerk/nextjs/server";
 
 
+const clerk = createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY || '',
+});
 
 const AI = new OpenAI({
     apiKey: process.env.GEMINI_API,
@@ -67,7 +70,7 @@ export  async function POST(req:NextRequest ){
 
           if(plan !== 'primium_plan'){
 
-            await clerkClient.users.updateUserMetadata(
+            await clerk.users.updateUserMetadata(
                    userId,
                    {
                        privateMetadata:{
