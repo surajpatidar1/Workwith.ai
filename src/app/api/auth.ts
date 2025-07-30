@@ -1,5 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
-import {clerkClient} from '@clerk/clerk-sdk-node'
+import { createClerkClient } from '@clerk/backend' 
+
+const clerk = createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY!,
+});
 
 
 type UserDataType = {
@@ -19,7 +23,7 @@ type UserDataType = {
           
          if (!userId) throw new Error("User not found");
 
-        const user = await clerkClient.users.getUser(userId)
+        const user = await clerk.users.getUser(userId)
 
 
         let free_usage = 0
@@ -27,7 +31,7 @@ type UserDataType = {
               free_usage = Number(user.privateMetadata.free_usage)
         }
         else{
-            await clerkClient.users.updateUserMetadata(userId,{privateMetadata: {
+            await clerk.users.updateUserMetadata(userId,{privateMetadata: {
                 free_usage: 0
             }})
             
