@@ -6,7 +6,7 @@ import { useState } from "react";
 import {  SignIn,useUser } from "@clerk/clerk-react";
 
 
-function page() {
+function Page() {
   const  route = useRouter();
    const [sideBar,setSideBar] = useState<boolean>(false);
   const {user} = useUser();
@@ -45,4 +45,4 @@ function page() {
 }
 
 
-export  default page
+export  default Page

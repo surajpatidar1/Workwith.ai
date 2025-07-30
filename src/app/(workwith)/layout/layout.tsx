@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "@/app/components/sidebar";
 
-function Sidelayout({
-  children,
-}: Readonly<{
+interface SidelayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+function Sidelayout({ children }: SidelayoutProps) {
   const [sideBar, setSideBar] = useState<boolean>(false);
 
   return (
