@@ -88,8 +88,11 @@ export  async function POST(req:NextRequest ){
                      resource_type: "image",
                         });
 
+          console.log(image_url)
+
+
           await sql`INSERT INTO creations (user_Id,prompt,content,type)
-          VALUES (${userId},${`Removed ${object} from image`},${image_url},'image'`;
+          VALUES (${userId},${`Removed ${object} from image`},${image_url},'image')`;
 
           
 

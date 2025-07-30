@@ -8,7 +8,7 @@ export async function POST(req:NextRequest) {
         const {userId} = await auth()
         const {id} = await req.json()
 
-        const [creations] = await sql `SELECT * FROM WHERE id = ${id}`
+        const [creations] = await sql `SELECT * FROM creations WHERE id = ${id}`
 
         if(!creations){
             return NextResponse.json(
@@ -33,7 +33,7 @@ export async function POST(req:NextRequest) {
             messages = 'Creations Liked'
         }
 
-        const formattedArray = `{${updatedLikes.json('.')}}`
+        const formattedArray = `{${updatedLikes.join('.')}}`
 
         await sql `UPDATE creations SET likes = ${formattedArray} :: text[] WHERE id = ${id}`
 
@@ -43,7 +43,8 @@ export async function POST(req:NextRequest) {
                                  messages
                             });
 
-    } catch (error) {
-        
+    } catch (error:any) {
+        console.log("like Error ",error);
+        return NextResponse.json(error.message)
     }
 }

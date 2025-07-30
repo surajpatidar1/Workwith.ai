@@ -20,7 +20,7 @@ function page() {
  const {getToken} =  useAuth()
 
   const onSubmitHandler = async ()=>{
-           console.log("clicked")
+          
           
      try {
       setLoading(true)
@@ -106,14 +106,14 @@ function page() {
                           </div>
                          ): (
 
-                          <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-5">
-                                           <Image
-                                          src={content}
-                                          alt="AI Generated Image"
-                                            fill
-                                          className="object-contain rounded-lg"
-                                         />
-                                         </div>
+                          <div className="relative w-[500px] h-[500px] flex items-center justify-center mt-5">
+                                   <Image
+                                 src={content}
+                                 alt="AI Generated Image"
+                                fill
+                              className="object-contain rounded-lg"
+                           />
+                          </div>
                          )
               }
             
