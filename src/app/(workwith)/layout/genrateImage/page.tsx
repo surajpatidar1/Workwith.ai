@@ -10,7 +10,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import NextImage  from 'next/image'
 
-function page() {
+function Page() {
 
 
   interface Style{
@@ -170,4 +170,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

@@ -19,7 +19,7 @@ interface creationData{
     updated_at: string,
 }
 
-function page() {
+function Page() {
 
   const [creations,setCreations] = useState<creationData[]>([])
   const [loading,setLoading] = useState<boolean>(true)
@@ -127,4 +127,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

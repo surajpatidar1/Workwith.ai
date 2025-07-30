@@ -23,7 +23,7 @@ interface data{
       __v?: number,
 }
 
-function page() {
+function Page() {
 
    const [ creations,setCreations] = useState<data[]>([]);
    const [loading,setLoading] = useState<boolean>(true)
@@ -156,4 +156,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

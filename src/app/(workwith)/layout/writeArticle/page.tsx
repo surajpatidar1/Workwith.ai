@@ -13,7 +13,7 @@ interface value {
   length: number,
   text: string
 }
-function page() {
+function Page() {
 
   // input data
 
@@ -174,4 +174,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

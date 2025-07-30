@@ -8,7 +8,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 
-function page() {
+function Page() {
 
   const [files, setFiles] = useState<File[]>([]);
   const [loading,setLoading] = useState<boolean>(false)
@@ -125,4 +125,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

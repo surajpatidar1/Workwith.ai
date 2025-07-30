@@ -7,7 +7,7 @@ import { Edit , Sparkles } from 'lucide-react'
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Markdown from "react-markdown";
-function page() {
+function Page() {
 
 
    const placeholders = [
@@ -181,4 +181,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

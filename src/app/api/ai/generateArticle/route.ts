@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { createClerkClient } from '@clerk/backend' 
 
 const clerk = createClerkClient({
-  secretKey: process.env.CLERK_SECRET_KEY || '',
+  secretKey: process.env.CLERK_SECRET_KEY!,
 });
 
 const AI = new OpenAI({

@@ -9,7 +9,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 
-function page() {
+function Page() {
 
   const [files, setFiles] = useState<File[]>([]);
     const handleFileUpload = (files: File[]) => {
@@ -124,5 +124,5 @@ function page() {
   )
 }
 
-export default page
+export default Page
 
