@@ -6,8 +6,13 @@ export  async function GET(req:NextRequest) {
     try {
         const {userId} = await auth()
 
-      const creations =   await sql `SELECT * FROM creations WHERE user_id = ${userId} ORDER BY created_at DESC`;
+        if(!userId){
+          console.error("userId is not found :",userId)
+        }
+        
 
+      const creations =   await sql `SELECT * FROM creations WHERE user_id = ${userId} ORDER BY created_at DESC`;
+     
       return NextResponse.json({success:true,creations})
 
     } catch (error:any) {

@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+AI-Powered Content Platform
 
-## Getting Started
+🚀 Tech Stack
 
-First, run the development server:
+Frontend: Next.js (App Router + TypeScript), TailwindCSS, Shadcn UI, Acertinity
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Authentication: Clerk UI
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Backend: TypeScript API routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Database: Neon.tech (PostgreSQL)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+AI Integrations:
 
-## Learn More
+Clipdrop (Article & Blog Title Generation, Remove BG, Remove Object)
 
-To learn more about Next.js, take a look at the following resources:
+Gemini (Resume Review)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Cloud: Cloudinary for image upload & delivery
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✅ Features
 
-## Deploy on Vercel
+Bill Integration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Authentication using Clerk
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Beautiful UI with Shadcn + Acertinity styling
+
+Article & Blog Title Generator powered by ClipDrop AI
+
+Remove Background and Remove Objects from images (Clipdrop)
+
+Resume Review using Gemini AI
+
+Community Section to publish and explore blogs
+
+Cloudinary for fast and reliable media hosting
+
+📁 Folder Structure (Major Modules)
+
+app/
+  ├─ writeArticle/
+  ├─ removebg/
+  ├─ removeObj/
+  ├─ reviewResume/
+  ├─ community/
+  └─ dashboard/
+
+components/
+  └─ ui/ (shadcn components)
+
+api/
+  ├─ cloudinary/
+  ├─ ai/
+  ├─ blog/
+  └─ user/
+
+lib/ & configCloud/ (Clerk + DB + Cloudinary configs)
+
+🔐 Clerk Auth
+
+Uses Clerk UI for sign in, sign up, dashboard protection.
+
+@clerk/nextjs for auth hooks and session management.
+
+🎨 ClipDrop AI
+
+Article & Blog Title Generation via prompts
+
+Remove Background endpoint
+
+Remove Object using mask and source image
+
+🌩️ Cloudinary Integration
+
+Used for storing edited images
+
+Integrated via REST upload and URL replacement
+
+🧠 Gemini AI
+
+Resume analysis and improvement suggestions
+
+Integrated in reviewResume/page.tsx
+
+🧪 Pages Summary
+
+Route
+
+Feature
+
+/writeArticle
+
+Blog title & content generation
+
+/removebg
+
+Image background remover
+
+/removeObj
+
+Object remover with mask
+
+/reviewResume
+
+AI resume review
+
+/community
+
+User blogs exploration
+
+/dashboard
+
+Authenticated user dashboard
+
+📦 Deployment
+
+Can be deployed on Vercel with .env setup
+
+.env variables
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+DATABASE_URL=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+CLIPDROP_API_KEY=
+
+🧑‍💻 Built by Suraj Patidar
