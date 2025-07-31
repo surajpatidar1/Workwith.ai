@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useAuth } from '@clerk/clerk-react'
 import axios from 'axios'
 import { Image as IconImage, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import NextImage from 'next/image'
 
